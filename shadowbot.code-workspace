@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../deep-thought"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			"redhat.vscode-yaml",
+			"redhat.java",
+			"redhat.vscode-quarkus",
+			"redhat.vscode-openshift-connector",
+			"ms-python.python",
+			"ms-ossdata.vscode-postgresql"
+		]
+	},
+	"settings": {
+	}
+}
