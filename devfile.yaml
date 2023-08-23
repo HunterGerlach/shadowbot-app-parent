@@ -4,13 +4,6 @@ attributes:
 metadata:
   name: shadowbot-app-parent
 projects:
-- name: shadowbot-app-parent
-  git:
-    checkoutFrom:
-      remote: origin
-      revision: main
-    remotes:
-      origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
 - name: deep-thought
   git:
     checkoutFrom:
