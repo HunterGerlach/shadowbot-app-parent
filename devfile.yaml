@@ -10,36 +10,11 @@ projects:
       remote: origin
       revision: main
     remotes:
-      origin: git@github.com:HunterGerlach/shadowbot-app-parent
+      origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
 - name: deep-thought
   git:
     checkoutFrom:
       remote: origin
       revision: main
     remotes:
-      origin: git@github.com:HunterGerlach/deep-thought.git
-components:
-- name: postgres
-  container:
-    image: quay.io/sclorg/postgresql-15-c9s:c9s
-    memoryRequest: 128M
-    memoryLimit: 512M
-    sourceMapping: /projects
-    mountSources: true
-    env:
-    - name: POSTGRESQL_USER
-      value: postgres
-    - name: POSTGRESQL_PASSWORD
-      value: postgres
-    - name: POSTGRESQL_DATABASE
-      value: postgres
-    volumeMounts:
-    - name: pgdata
-      path: /var/lib/pgsql/data
-    endpoints:
-      - name: postgres
-        targetPort: 5432
-        exposure: internal
-- volume:
-    size: 2Gi
-  name: pgdata
+      origin: https://github.com/HunterGerlach/deep-thought.git
