@@ -62,7 +62,7 @@ Authorize all access
 You will access to Dev Spaces landing page
 
 
-4- Import the `shadowbot-app-parent`` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
+4- Import the `shadowbot-app-parent` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
 
 ![Import project](images/import-project.png)
 
