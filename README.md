@@ -41,7 +41,7 @@ After a few minutes, you will see the new Dev Spaces operator installed
 
 You may leave the default configuration, or change according to your need (eg log level, metrics, etc.)
 Click on the "Create" button
-In the Workload > Pods section, you can see several pods being created. This may take a few minutes.
+In the "Workload > Pods" section, you can see several pods being created. This may take a few minutes.
 
 ![Pods](images/pods.png)
 
@@ -130,5 +130,6 @@ GitOps and ArgoCD may be used for this.
 
 # Useful links:
 
-Follow Charro's blog: https://upstreamwithoutapaddle.com/blog%20post/2023/04/06/Development-On-OpenShift-With-Eclipse-Che.html
-Useful Video: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG 
+Che blog: https://upstreamwithoutapaddle.com/blog%20post/2023/04/06/Development-On-OpenShift-With-Eclipse-Che.html
+
+Useful Video about OCP Dev Spaces: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG 
