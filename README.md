@@ -83,13 +83,15 @@ Your workspace is ready to use.
 ## Automated installation
 
 For an automated installation, the OpenShift CLI must be set up. This will allow to use the `oc` command.
+
 Make sure you download the CLI version that matches the OpenShift version you will be using. 
+
 Check out the CLI command reference guide: https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/developer-cli-commands.html
 
 Three steps are required:
     1- Install the Dev Spaces operator
     2- Create an instance of Dev Spaces
-    3- Create a Workspace using the parent app project which contains the required information
+    3- Create a Workspace using the parent app project which contains the required information about other projects included in the workspace
 
 
 # Recommendations and Best Practices
