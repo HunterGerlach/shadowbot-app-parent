@@ -15,41 +15,66 @@ The main components are:
 1- Get an access to an OpenShift cluster (RHPDS if needed) 
 
 2- In the OpenShift web console from the operator hub, search and install the Dev Spaces operator as an administrator
+
 ![Operator Hub](images/operator-hub.png)
+
 Click on the "Install" button
+
 ![Operator Install](images/operator-install.png)
+
 You may leave the default set up or change them depending on your cluster requirements
+
 ![Default Setup](images/default-setup.png)
+
 Click on the "Install" button, and the installation will start
+
 ![Installing](images/installing.png)
+
 After a few minutes, you will see the new Dev Spaces operator installed
+
 ![Installing](images/installed.png)
 
+
 3- Create an instance of the Dev Spaces
+
 ![Create instance](images/create-instance.png)
+
 You may leave the default configuration, or change according to your need (eg log level, metrics, etc.)
 Click on the "Create" button
 In the Workload > Pods section, you can see several pods being created. This may take a few minutes.
+
 ![Pods](images/pods.png)
 
+
 4- Once all pods are up and running, using a non-administrator role, click "Dev Spaces" in the 9-square menu (top-right corner)
+
 ![Dev Spaces Menu Option](images/dev-spaces-menu-option.png)
+
 This will ask you to login
+
 ![Connection](images/connect.png)
+
 ![Login](images/login.png)
+
 Authorize all access
+
 ![Authorization](images/authorization.png)
 You will access to Dev Spaces landing page
 
+
 4- Import the `shadowbot-app-parent`` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
+
 ![Import project](images/import-project.png)
+
 The workspace is being created, this may takes a few minutes to complete
+
 ![Starting workspace](images/starting-workspace.png)
 
 5- VS Code should now be up and running in your Dev Sapces environment
 Click on the "Open Workspace" button on the bottom right. This step is required if the `VSCODE_DEFAULT_WORKSPACE` is not set in the devfile.
 An image for a specific container will be created in the future where this property will be set.
 You should now see the projects identified to be part of the workspace
+
 ![VS Code projects](images/vscode.png)
 
 Your workspace is ready to use.
