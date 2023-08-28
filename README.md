@@ -97,8 +97,11 @@ Three steps are required:
 - What kind of image to use for the Dev Spaces workspace?
 
     1- Using the default, named "Universal Default Image". In that case, no need to have the `components` defined in the devfile.yaml.
-        Pros: nothing to do
-        Cons: large image (> 10GB)
+
+    - Pros
+        - Nothing to do
+    - Cons
+        - Large image (> 10GB)
 
     2- Build a custom image. The `devfile.yaml` file needs to include a component that points to the image to be used. For instance, the following one: `quay.io/cgruver0/che/che-demo-app:latest`.
     A `VSCODE_DEFAULT_WORKSPACE` property with a value set to the desired workspace (eg `/projects/che-demo-app/che-demo.code-workspace`) needs to be added to the container for that component. If no custom image is being used, then this env variable cannot be set and when VSCode is started, an extra step is needed to click on "Open Workspace" (bottom-right of the IDE).    
