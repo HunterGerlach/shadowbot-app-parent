@@ -100,9 +100,9 @@ Three steps are required:
         Pros: nothing to do
         Cons: large image (> 10GB)
 
-    2- Build a custom image. The devfile.yaml file needs to include a component that points to the image to be used. For instance, the following one: quay.io/cgruver0/che/che-demo-app:latest.
+    2- Build a custom image. The `devfile.yaml` file needs to include a component that points to the image to be used. For instance, the following one: `quay.io/cgruver0/che/che-demo-app:latest`.
     A `VSCODE_DEFAULT_WORKSPACE` property with a value set to the desired workspace (eg `/projects/che-demo-app/che-demo.code-workspace`) needs to be added to the container for that component. If no custom image is being used, then this env variable cannot be set and when VSCode is started, an extra step is needed to click on "Open Workspace" (bottom-right of the IDE).    
-    An example to build a custom image can be found here: https://github.com/eclipse-che-demo-app/che-demo-app/blob/main/images/build.sh
+    An example on how to build a custom image can be found here: https://github.com/eclipse-che-demo-app/che-demo-app/blob/main/images/build.sh
 
     - Pros 
         - Smaller size image
@@ -113,7 +113,7 @@ Three steps are required:
         - Needs to be stored somewhere (Quay?)
         - Need to set up the script(s)
 
-- OAuth is the recommended way to go regarding security and credentials.  Using ConfigMap and secrets is not as good. 
+- OAuth is the recommended way to go regarding security and credentials.  Using `ConfigMap` and secrets is not as good. 
 
     - Pros 
         - More enterprise-ready
@@ -131,11 +131,10 @@ GitOps and ArgoCD may be used for this.
 
 - If the devfile points to restricted github repo, then an OAuth ID is needed
 
-	-> https://access.redhat.com/documentation/en-us/red_hat_openshift_dev_spaces/3.7/html/administration_guide/configuring-devspaces#configuring-oauth-2-for-github
 
 
 # Useful links:
 
-Che blog: https://upstreamwithoutapaddle.com/blog%20post/2023/04/06/Development-On-OpenShift-With-Eclipse-Che.html
+- Che blog: https://upstreamwithoutapaddle.com/blog%20post/2023/04/06/Development-On-OpenShift-With-Eclipse-Che.html
 
-Useful Video about OCP Dev Spaces: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG 
+- Useful Video about OCP Dev Spaces: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG 
