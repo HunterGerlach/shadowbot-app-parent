@@ -1,5 +1,7 @@
 # Shadowbot+AI App Parent
 
+Quickstart - Click the following button to get started quickly (assuming you have credentials to the cluster)...
+
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-kbdl4.dynamic.opentlc.com/#https://github.com/HunterGerlach/shadowbot-app-parent.git)
 
 > Note: Update ^this^ badge with the URL for the cluster that Dev Spaces is deployed to if/when that changes.
