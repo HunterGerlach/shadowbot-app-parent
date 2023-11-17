@@ -1,4 +1,4 @@
-# Project Pre-Reqs and Setup
+# Day 0 - Project Pre-Reqs and Setup
 
 ## CheCluster Setup and Configuration
 
@@ -35,42 +35,9 @@ You may leave the default configuration, or change according to your need (eg lo
 Click on the "Create" button
 In the "Workload > Pods" section, you can see several pods being created. This may take a few minutes.
 
+> Note: If you want this to be available to other users (which you likely do!), then you need to either a) deploy this to a namespace where others will have access, or b) adjust user access to the default-install namespace.
+
 ![Pods](../images/pods.png)
-
-
-4- Once all pods are up and running, using a non-administrator role, click "Dev Spaces" in the 9-square menu (top-right corner)
-
-![Dev Spaces Menu Option](../images/dev-spaces-menu-option.png)
-
-This will ask you to login
-
-![Connection](../images/connect.png)
-
-![Login](../images/login.png)
-
-Authorize all access
-
-![Authorization](../images/authorization.png)
-You will access to Dev Spaces landing page
-
-
-4- Import the `shadowbot-app-parent` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
-
-![Import project](../images/import-project.png)
-
-The workspace is being created, this may takes a few minutes to complete
-
-![Starting workspace](../images/starting-workspace.png)
-
-5- VS Code should now be up and running in your Dev Sapces environment
-Click on the "Open Workspace" button on the bottom right. This step is required if the `VSCODE_DEFAULT_WORKSPACE` is not set in the devfile.
-An image for a specific container will be created in the future where this property will be set.
-You should now see the projects identified to be part of the workspace
-
-![VS Code projects](../images/vscode.png)
-
-Your workspace is ready to use.
-
 
 ### Automated installation
 

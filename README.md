@@ -20,11 +20,11 @@ To properly use this repo, you'll need everything up and running. The  [Day 0](d
 
 ### Day 1 - Setting up the Repo
 
-Now that you have an OpenShift cluster with a Dev Spaces CheCluster up and running, you'll need to setup secrets to be able to properly interact with the repo. These credentials will be used to commit your changes and pull changes made by others. You'll also need to setup your specific workspace for this project. All of those details are outlined in the [Day 1](docs/day1-deployment.md) documentation. After you have completed those steps, return here to move on to normal contributing activity guidance.
+Now that you have an OpenShift cluster with a Dev Spaces CheCluster up and running, you'll need to setup secrets to be able to properly interact with the repo. These credentials will be used to commit your changes and pull changes made by others. You'll also need to setup your specific workspace for this project. All of those details are outlined in the [Day 1](docs/day-1-deployment.md) documentation. After you have completed those steps, return here to move on to normal contributing activity guidance.
 
 ### Day 2 - Contributing to this project
 
-Now that everything is up and running, you should be able to do your daily development actvities like you would on any other machine. Additional contribution details can be found in the [Day 2](docs/day2-contributing.md) documentation.
+Now that everything is up and running, you should be able to do your daily development actvities like you would on any other machine. Additional contribution details can be found in the [Day 2](docs/day-2-contributing.md) documentation.
 
 Happy coding...
 
