@@ -9,12 +9,19 @@
 	],
 	"extensions": {
 		"recommendations": [
+			"eamodio.gitlens",
+			"esbenp.prettier-vscode",
+			"mhutchie.git-graph",
+			"ms-ossdata.vscode-postgresql",
+			"ms-python.python",
+			"ms-vscode.live-server",
+			"oderwat.indent-rainbow",
 			"redhat.vscode-yaml",
 			"redhat.java",
 			"redhat.vscode-quarkus",
 			"redhat.vscode-openshift-connector",
-			"ms-python.python",
-			"ms-ossdata.vscode-postgresql"
+			"ryanluker.vscode-coverage-gutters",
+			"streetsidesoftware.code-spell-checker"
 		]
 	},
 	"settings": {
