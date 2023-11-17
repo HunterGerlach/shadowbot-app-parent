@@ -10,7 +10,7 @@ projects:
       remote: origin
       revision: main
     remotes:
-      origin: https://github.com/HunterGerlach/shadowbot-app-parent
+      origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
 - name: deep-thought
   git:
     checkoutFrom:
