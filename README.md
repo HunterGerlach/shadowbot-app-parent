@@ -2,6 +2,8 @@
 
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-kbdl4.dynamic.opentlc.com/#https://github.com/HunterGerlach/shadowbot-app-parent.git)
 
+> Note: Update ^this^ badge with the URL for the cluster that Dev Spaces is deployed to if/when that changes.
+
 This project was created as part of the Shadowbot+AI project.
 
 It contains the configuration for an OpenShift Dev Spaces workspace, and includes another project.
