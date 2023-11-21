@@ -30,7 +30,10 @@ components:
           value: '5858'
       endpoints:
         - name: http-node
+          protocol: http
           targetPort: 8000
+          secure: false
+          exposure: public
         - exposure: none
           name: debug
           targetPort: 5858
