@@ -21,7 +21,7 @@ projects:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi9/python-311:latest
+      image: registry.access.redhat.com/ubi8/python-311:latest
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
@@ -31,15 +31,20 @@ components:
       endpoints:
         - name: http-node
           targetPort: 8000
+          attributes:
+            protocol: http
+            secure: 'false'
+            public: 'true'
+            discoverable: 'false'
         - exposure: none
           name: debug
           targetPort: 5858
 commands:
-  - id: install
+  - id: build
     exec:
       component: runtime
-      commandLine: pip install poetry && poetry shell && poetry install
-      workingDir: ${PROJECT_SOURCE}
+      commandLine: pip install poetry && poetry install
+      workingDir: /projects/deep-thought
       group:
         kind: build
         isDefault: true
@@ -47,7 +52,7 @@ commands:
     exec:
       component: runtime
       commandLine: make run
-      workingDir: ${PROJECT_SOURCE}
+      workingDir: /projects/deep-thought
       group:
         kind: run
         isDefault: true
