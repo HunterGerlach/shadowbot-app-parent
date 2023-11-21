@@ -34,3 +34,20 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
+commands:
+  - id: install
+    exec:
+      component: runtime
+      commandLine: pip install poetry && poetry shell && poetry install
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      commandLine: make run
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: run
+        isDefault: true
