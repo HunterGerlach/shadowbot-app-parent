@@ -18,3 +18,14 @@ projects:
       revision: main
     remotes:
       origin: https://github.com/HunterGerlach/deep-thought.git
+components:
+  - container:
+      image: registry.access.redhat.com/ubi9/python-311
+      mountSources: true
+      endpoints:
+        - name: app-port
+          exposure: public
+          protocol: http
+          targetPort: 8000
+      command: ['tail']
+      args: ['-f', '/dev/null']
