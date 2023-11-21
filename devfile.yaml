@@ -38,7 +38,7 @@ components:
           name: debug
           targetPort: 5858
 commands:
-  - id: install
+  - id: build
     exec:
       component: runtime
       commandLine: pip install -r requirements.txt && make install
