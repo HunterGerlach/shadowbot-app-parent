@@ -22,11 +22,8 @@ components:
   - name: my-python-container
     container:
       image: registry.access.redhat.com/ubi9/python-311
-      mountSources: true
       endpoints:
         - name: app-port
           exposure: public
           protocol: http
           targetPort: 8000
-      command: ['tail']
-      args: ['-f', '/dev/null']
