@@ -8,14 +8,14 @@ projects:
   git:
     checkoutFrom:
       remote: origin
-      revision: main
+      revision: feature/devfile-updates-nov #main
     remotes:
       origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
 - name: deep-thought
   git:
     checkoutFrom:
       remote: origin
-      revision: main
+      revision: feature/devfile-updates-nov #main
     remotes:
       origin: https://github.com/HunterGerlach/deep-thought.git
 components:
