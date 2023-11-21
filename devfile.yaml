@@ -31,22 +31,33 @@ components:
       endpoints:
         - name: http-node
           targetPort: 8000
-          attributes:
-            protocol: http
-            secure: 'false'
-            public: 'true'
-            discoverable: 'false'
         - exposure: none
           name: debug
           targetPort: 5858
 commands:
-  - id: build
+  - id: install
     exec:
       component: runtime
       commandLine: pip install -r requirements.txt && make install
       workingDir: /projects/deep-thought
       group:
         kind: build
+        isDefault: true
+  - id: lint
+    exec:
+      component: runtime
+      commandLine: make lint
+      workingDir: /projects/deep-thought
+      group:
+        kind: test
+        isDefault: true
+  - id: test
+    exec:
+      component: runtime
+      commandLine: make test
+      workingDir: /projects/deep-thought
+      group:
+        kind: test
         isDefault: true
   - id: run
     exec:
