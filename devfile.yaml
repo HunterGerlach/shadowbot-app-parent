@@ -43,7 +43,7 @@ commands:
   - id: build
     exec:
       component: runtime
-      commandLine: pip install poetry && poetry install
+      commandLine: pip install -r requirements.txt && make install
       workingDir: /projects/deep-thought
       group:
         kind: build
