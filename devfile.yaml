@@ -19,7 +19,8 @@ projects:
     remotes:
       origin: https://github.com/HunterGerlach/deep-thought.git
 components:
-  - container:
+  - name: my-python-container
+    container:
       image: registry.access.redhat.com/ubi9/python-311
       mountSources: true
       endpoints:
