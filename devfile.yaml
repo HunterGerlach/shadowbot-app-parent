@@ -19,11 +19,18 @@ projects:
     remotes:
       origin: https://github.com/HunterGerlach/deep-thought.git
 components:
-  - name: my-python-container
+  - name: runtime
     container:
-      image: registry.access.redhat.com/ubi9/python-311
+      image: registry.access.redhat.com/ubi9/python-311:latest
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+      mountSources: true
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
       endpoints:
-        - name: app-port
-          exposure: public
-          protocol: http
+        - name: http-node
           targetPort: 8000
+        - exposure: none
+          name: debug
+          targetPort: 5858
