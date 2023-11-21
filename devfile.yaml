@@ -41,7 +41,7 @@ commands:
   - id: build
     exec:
       component: runtime
-      commandLine: pip install -r requirements.txt && make install
+      commandLine: pip3 install -r requirements.txt && make install
       workingDir: /projects/deep-thought
       group:
         kind: build
@@ -65,7 +65,7 @@ commands:
   - id: run
     exec:
       component: runtime
-      commandLine: make run
+      commandLine: export PYTHONPATH=$(pwd) && make run
       workingDir: /projects/deep-thought
       group:
         kind: run
