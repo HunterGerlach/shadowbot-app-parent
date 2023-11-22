@@ -21,7 +21,7 @@ projects:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi8/python-311:latest
+      image: registry.redhat.io/devspaces/udi-rhel8@sha256:571ceed7b4b886b7f989ba193fa74ec863600f56f7c0045f3a1af6dadf09f85b #registry.access.redhat.com/ubi8/python-311:latest
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       env:
