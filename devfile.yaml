@@ -24,7 +24,6 @@ components:
       image: registry.access.redhat.com/ubi8/python-311:latest
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
-      mountSources: true
       env:
         - name: DEBUG_PORT
           value: '5858'
