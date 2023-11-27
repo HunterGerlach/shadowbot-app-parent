@@ -2,7 +2,7 @@
 
 Quickstart - Click the following button to get started quickly (assuming you have credentials to the cluster)...
 
-[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-kbdl4.dynamic.opentlc.com/#https://github.com/HunterGerlach/shadowbot-app-parent.git)
+[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-xcd89.dynamic.opentlc.com/#https://github.com/HunterGerlach/shadowbot-app-parent.git)
 
 > Note: Update ^this^ badge with the URL for the cluster that Dev Spaces is deployed to if/when that changes.
 
@@ -11,6 +11,7 @@ This project was created as part of the Shadowbot+AI project.
 It contains the configuration for an OpenShift Dev Spaces workspace, and includes another project.
 
 The main components are:
+
 - The Devfile - ./devfile.yaml
 - The VSCode workspace - ./shadowbot.code-workspace
 
@@ -18,7 +19,7 @@ The main components are:
 
 ### Day 0 - Planning your usage of Dev Spaces for Shadobot+AI
 
-To properly use this repo, you'll need everything up and running. The  [Day 0](docs/day-0-pre-reqs.md) docuemtation outlines the manual or automated steps necessary to get things properly configured. Once that's done you can come back here for Day 1 activities.
+To properly use this repo, you'll need everything up and running. The [Day 0](docs/day-0-pre-reqs.md) docuemtation outlines the manual or automated steps necessary to get things properly configured. Once that's done you can come back here for Day 1 activities.
 
 ### Day 1 - Setting up the Repo
 
@@ -32,10 +33,8 @@ Happy coding...
 
 > Test -> Code -> Refactor -> Commit -> Repeat.
 
-
-
 ## Useful links:
 
 - Che blog: https://upstreamwithoutapaddle.com/blog%20post/2023/04/06/Development-On-OpenShift-With-Eclipse-Che.html
 
-- Useful Video about OCP Dev Spaces: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG 
+- Useful Video about OCP Dev Spaces: https://youtu.be/Jfd0F0-uYfU?si=PfR5_nXEYP12zrHG
