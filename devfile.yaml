@@ -40,8 +40,8 @@ commands:
   - id: bootstrap
     exec:
       component: runtime
-      commandLine: echo "Bootstrap Done"
-      workingDir: ${PROJECTS_ROOT}
+      commandLine: ./bootstrap.sh
+      workingDir: ${PROJECTS_ROOT}/shadowbot-app-parent/scripts
       group:
         kind: build
         isDefault: true
