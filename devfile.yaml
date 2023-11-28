@@ -41,7 +41,7 @@ commands:
     exec:
       component: runtime
       commandLine: echo "Bootstrap Done"
-      workingDir: $PARENT_DIR
+      workingDir: ${PROJECTS_ROOT}
       group:
         kind: build
         isDefault: true
@@ -49,7 +49,7 @@ commands:
     exec:
       component: runtime
       commandLine: pip3 install -r requirements.txt && make install
-      workingDir: /projects/deep-thought
+      workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: build
         isDefault: true
@@ -57,7 +57,7 @@ commands:
     exec:
       component: runtime
       commandLine: make lint
-      workingDir: /projects/deep-thought
+      workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: test
         isDefault: true
@@ -65,7 +65,7 @@ commands:
     exec:
       component: runtime
       commandLine: make test
-      workingDir: /projects/deep-thought
+      workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: test
         isDefault: true
@@ -73,7 +73,7 @@ commands:
     exec:
       component: runtime
       commandLine: export PYTHONPATH=$(pwd) && make run
-      workingDir: /projects/deep-thought
+      workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: run
         isDefault: true
