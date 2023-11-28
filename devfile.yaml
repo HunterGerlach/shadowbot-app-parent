@@ -37,6 +37,14 @@ components:
           name: debug
           targetPort: 5858
 commands:
+  - id: bootstrap
+    exec:
+      component: runtime
+      commandLine: echo "Bootstrap Done"
+      workingDir: $PARENT_DIR
+      group:
+        kind: build
+        isDefault: true
   - id: build
     exec:
       component: runtime
