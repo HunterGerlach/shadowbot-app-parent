@@ -58,9 +58,9 @@ The workspace is being created, this may takes a few minutes to complete
 ![Starting workspace](../images/starting-workspace.png)
 
 5. VS Code should now be up and running in your Dev Sapces environment
-Click on the "Open Workspace" button on the bottom right. (This step is required if the `VSCODE_DEFAULT_WORKSPACE` is not set in the devfile.)
-An image for a specific container will be created in the future where this property will be set.
-You should now see the projects identified to be part of the workspace
+   Click on the "Open Workspace" button on the bottom right. (This step is required if the `VSCODE_DEFAULT_WORKSPACE` is not set in the devfile.)
+   An image for a specific container will be created in the future where this property will be set.
+   You should now see the projects identified to be part of the workspace
 
 ![VS Code projects](../images/vscode.png)
 
@@ -70,6 +70,7 @@ Your workspace is ready to use.
 
 You can now run general commands and perform minimal coding tasks, but more complex activities (e.g. running the application) will require you to have configurations and secrets available for your application to consume. We outline the steps to getting those mounted below...
 
+> Note: The steps below assume you're starting from scratch. If you want to quickly get up and running you can use the default Configmap and Secrets yaml files located in the shared Bitbucket. You should have received access to the collection when you onboarded. If you don't have access to them, reach out to the team.
 
 ### Mount Configmap
 
