@@ -4,26 +4,45 @@
 			"path": "."
 		},
 		{
+			"path": "../shadowbot-app-parent"
+		},
+		{
 			"path": "../deep-thought"
 		}
 	],
 	"extensions": {
 		"recommendations": [
-			"eamodio.gitlens",
-			"esbenp.prettier-vscode",
-			"mhutchie.git-graph",
-			"ms-ossdata.vscode-postgresql",
-			"ms-python.python",
-			"ms-vscode.live-server",
-			"oderwat.indent-rainbow",
+			// "eamodio.gitlens",
+			// "esbenp.prettier-vscode",
+			// "mhutchie.git-graph",
+			// "ms-ossdata.vscode-postgresql",
+			// "ms-python.python",
+			// "ms-vscode.live-server",
+			// "oderwat.indent-rainbow",
+			// "cnshenj.vscode-task-manager",
+			// "redhat.vscode-yaml",
+			// "redhat.java",
+			// "redhat.vscode-quarkus",
+			// "redhat.vscode-openshift-connector",
+			// "ryanluker.vscode-coverage-gutters",
+			// "streetsidesoftware.code-spell-checker"
 			"redhat.vscode-yaml",
 			"redhat.java",
 			"redhat.vscode-quarkus",
 			"redhat.vscode-openshift-connector",
-			"ryanluker.vscode-coverage-gutters",
-			"streetsidesoftware.code-spell-checker"
+			"mhutchie.git-graph",
+			"eamodio.gitlens",
+			"streetsidesoftware.code-spell-checker",
+			"johnpapa.winteriscoming",
+			"cnshenj.vscode-task-manager",
+			"angular.ng-template",
+			"johnpapa.angular2",
+			"SonatypeCommunity.vscode-iq-plugin"
 		]
 	},
 	"settings": {
+		"workbench.colorTheme": "Winter is Coming (Light)",
+		"workbench.preferredDarkColorTheme": "Winter is Coming (Dark Blue)",
+		"workbench.preferredLightColorTheme": "Winter is Coming (Light)"
 	}
 }
