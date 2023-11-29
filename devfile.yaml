@@ -38,8 +38,129 @@ components:
           targetPort: 5858
   - name: deep-thought-configs
     openshift:
-      uri: ${PROJECTS_ROOT}/deep-thought/k8s/base/configMap.yaml
       deployByDefault: true
+      inlined:
+        schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: shadowbot-app-parent
+projects:
+- name: shadowbot-app-parent
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: feature/devfile-updates-nov #main
+    remotes:
+      origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
+- name: deep-thought
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: feature/devfile-updates-nov #main
+    remotes:
+      origin: https://github.com/HunterGerlach/deep-thought.git
+components:
+  - name: runtime
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8@sha256:571ceed7b4b886b7f989ba193fa74ec863600f56f7c0045f3a1af6dadf09f85b #registry.access.redhat.com/ubi8/python-311:latest
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
+      endpoints:
+        - name: http-node
+          protocol: http
+          targetPort: 8000
+          secure: true
+          exposure: public
+        - exposure: none
+          name: debug
+          targetPort: 5858
+  - name: deep-thought-configs
+    openshift:
+      deployByDefault: true
+      inlined: |
+        kind: ConfigMap
+        apiVersion: v1
+        metadata:
+          name: deep-thought-config
+        data:
+          PYTHONPATH: /
+          SPENDING_WARNING_PCT: '0.8'
+          OPENAI_MODEL_PRICE: '0.000003'
+          VERTEX_MODEL_VERSION: v1
+          GOOGLE_APPLICATION_CREDENTIALS: DEAFULT_PATH
+          MODEL_PROVIDER: AI_PROVIDER
+          EMBEDDING_MODEL_NAME: EMBEDDING_MODEL_NAME
+          LOG_LEVEL: DEBUG
+          COLLECTION_NAME: YOUR_COLLECTION_NAME
+          OPENAI_MODEL_NAME: OPENAI_MODEL_NAME
+          VERTEX_REGION: VERTEXT_REGION
+          VERTEX_ENDPOINT: VERTEX_ENDPOINT
+          DISABLE_SWAGGER: 'false'
+          SPEND_LOG_FILE: spend.log
+          TOKENIZERS_PARALLELISM: 'false'
+          APP_FILE: src/app.py
+          SPEND_LIMIT: '0.075'
+          CORS_ORIGINS: '*'
+          VERTEX_PROJECT_ID: VERTEX_PROJECT_ID
+          VERTEX_MODEL_NAME: VERTEX_MODEL_NAME
+          API_TITLE: API_TITLE_FOR_SWAGGER
+          API_VERSION: API_VERSION_FOR_SWAGGER
+          API_DESCRIPTION: API_DESCRIPTION_FOR_SWAGGER
+          SPEC_KEYS_TO_IGNORE: 'components,paths,info,'
+  - name: deep-thought-secrets
+    openshift:
+      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/secrets.yaml
+      deployByDefault: true
+  - name: google-application-credentials
+    openshift:
+      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/google-application-credentials.yaml
+      deployByDefault: true
+commands:
+  - id: bootstrap
+    exec:
+      component: runtime
+      commandLine: oc apply -k dev-spaces
+      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlay/
+      group:
+        kind: build
+        isDefault: true
+  - id: build
+    exec:
+      component: runtime
+      commandLine: pip3 install -r requirements.txt && make install
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      group:
+        kind: build
+        isDefault: true
+  - id: lint
+    exec:
+      component: runtime
+      commandLine: make lint
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      group:
+        kind: test
+        isDefault: true
+  - id: test
+    exec:
+      component: runtime
+      commandLine: make test
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      group:
+        kind: test
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      commandLine: export PYTHONPATH=$(pwd) && make run
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      group:
+        kind: run
+        isDefault: true
+
   - name: deep-thought-secrets
     openshift:
       uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/secrets.yaml
