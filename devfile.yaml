@@ -36,12 +36,21 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
+  - name: deep-thought-configs
+    openshift:
+      uri: ../deep-thought/k8s/base/configMap.yaml
+  - name: deep-thought-secrets
+    openshift:
+      uri: ../deep-thought/k8s/base/secrets.yaml
+  - name: google-application-credentials
+    openshift:
+      uri: ../deep-thought/k8s/base/google-application-credentials.yaml        
 commands:
   - id: bootstrap
     exec:
       component: runtime
-      commandLine: ./bootstrap.sh
-      workingDir: ${PROJECTS_ROOT}/shadowbot-app-parent/scripts
+      commandLine: oc apply -k ${PROJECTS_ROOT}/deep-thought/k8s/overlays/dev-spaces
+      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlays/
       group:
         kind: build
         isDefault: true
