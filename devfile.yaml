@@ -25,48 +25,8 @@ components:
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       env:
-        - name: DEBUG_PORT
-          value: '5858'
-      endpoints:
-        - name: http-node
-          protocol: http
-          targetPort: 8000
-          secure: true
-          exposure: public
-        - exposure: none
-          name: debug
-          targetPort: 5858
-  - name: deep-thought-configs
-    openshift:
-      deployByDefault: true
-      inlined:
-        schemaVersion: 2.2.0
-attributes:
-  controller.devfile.io/storage-type: per-workspace
-metadata:
-  name: shadowbot-app-parent
-projects:
-- name: shadowbot-app-parent
-  git:
-    checkoutFrom:
-      remote: origin
-      revision: feature/devfile-updates-nov #main
-    remotes:
-      origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
-- name: deep-thought
-  git:
-    checkoutFrom:
-      remote: origin
-      revision: feature/devfile-updates-nov #main
-    remotes:
-      origin: https://github.com/HunterGerlach/deep-thought.git
-components:
-  - name: runtime
-    container:
-      image: registry.redhat.io/devspaces/udi-rhel8@sha256:571ceed7b4b886b7f989ba193fa74ec863600f56f7c0045f3a1af6dadf09f85b #registry.access.redhat.com/ubi8/python-311:latest
-      args: ['tail', '-f', '/dev/null']
-      memoryLimit: 1024Mi
-      env:
+        - name: VSCODE_DEFAULT_WORKSPACE # This env var is what tells Dev Spaces how the workspace should be defined
+          value: "/projects/shadowbot-app-parent/shadowbot.code-workspace"
         - name: DEBUG_PORT
           value: '5858'
       endpoints:
@@ -113,63 +73,32 @@ components:
           SPEC_KEYS_TO_IGNORE: 'components,paths,info,'
   - name: deep-thought-secrets
     openshift:
-      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/secrets.yaml
       deployByDefault: true
+      inlined: |
+        apiVersion: v1
+        data:
+          username: aGVsbG8=
+          password: d29ybGQ=
+        kind: Secret
+        metadata:
+          name: deep-thought-secrets
+        type: Opaque
   - name: google-application-credentials
     openshift:
-      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/google-application-credentials.yaml
       deployByDefault: true
+      inlined: |
+        apiVersion: v1
+        data:
+          username2: YWRtaW4=
+          password2: MWYyZDFlMmU2N2Rm
+        kind: Secret
+        metadata:
+          name: google-application-credentials
+        type: Opaque
 commands:
-  - id: bootstrap
-    exec:
-      component: runtime
-      commandLine: oc apply -k dev-spaces
-      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlay/
-      group:
-        kind: build
-        isDefault: true
-  - id: build
-    exec:
-      component: runtime
-      commandLine: pip3 install -r requirements.txt && make install
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: build
-        isDefault: true
-  - id: lint
-    exec:
-      component: runtime
-      commandLine: make lint
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: test
-        isDefault: true
-  - id: test
-    exec:
-      component: runtime
-      commandLine: make test
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: test
-        isDefault: true
-  - id: run
-    exec:
-      component: runtime
-      commandLine: export PYTHONPATH=$(pwd) && make run
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: run
-        isDefault: true
-
-  - name: deep-thought-secrets
-    openshift:
-      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/secrets.yaml
-      deployByDefault: true
-  - name: google-application-credentials
-    openshift:
-      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/google-application-credentials.yaml
-      deployByDefault: true
-commands:
+  - id: testconfigs
+    apply:
+      component: deep-thought-configs
   - id: bootstrap
     exec:
       component: runtime
