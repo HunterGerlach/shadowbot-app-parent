@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../deep-thought"
+		},
+		{
+			"path": "../deep-thought-web-ui"
 		}
 	],
 	"extensions": {
