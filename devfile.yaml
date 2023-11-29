@@ -96,9 +96,6 @@ components:
           name: google-application-credentials
         type: Opaque
 commands:
-  - id: testconfigs
-    apply:
-      component: deep-thought-configs
   - id: bootstrap
     exec:
       component: runtime
