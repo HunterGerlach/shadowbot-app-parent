@@ -70,9 +70,39 @@ Your workspace is ready to use.
 
 You can now run general commands and perform minimal coding tasks, but more complex activities (e.g. running the application) will require you to have configurations and secrets available for your application to consume. We outline the steps to getting those mounted below...
 
+The configs and secrets are automatically mounted as part of the workspace setup. You only need to update them with your specific values for everything to work properly.
+
+### Add Configs
+
+1. In the file explorer to the left, enter into the following Deep Thought project path: `/projects/deep-thought/k8s/overlay/dev-spaces`
+
+2. Add/Open a file called `.env.config`
+
+3. Add values you wish to be used for your application. Typical values can be found in Bitbucket, but you're free to customize as necessary for your development needs.
+
+### Add Secrets
+
+1. Make sure you're still in the same directory (`/projects/deep-thought/k8s/overlay/dev-spaces`)
+
+2. Add/Open a file for your deep-thought-secrets called `.env.secrets`
+
+3. Add values you wish to be used for your application. Like before, typical/shared values can be found in Bitbucket, but depending on the secret you may need to obtain them through other means.
+
+4. In the same directory, add/open a file called `deepthought-dev.json`
+
+5. Add the necessary JSON object for the google-application-credentials (hint: Bitbucket)
+
+### Deploying your values / updating
+
+To make your config/secret values available to the Dev Spaces containers, you simply run the `bootstrap` task. This task basically does an `oc apply -k` which uses Kustomize to convert your config and secret files to proper Kubernetes object yaml files.
+
+Any time you need to update these values simply run `bootstrap` again and away you go!
+
+### !DEPRECATED! Instructions, kept for troubleshooting
+
 > Note: The steps below assume you're starting from scratch. If you want to quickly get up and running you can use the default Configmap and Secrets yaml files located in the shared Bitbucket. You should have received access to the collection when you onboarded. If you don't have access to them, reach out to the team.
 
-### Mount Configmap
+#### Mount Configmap
 
 1. Obtain the login token
 
@@ -88,7 +118,7 @@ You can now run general commands and perform minimal coding tasks, but more comp
 
 6. Once the workspace restarts, confirm that the configs have been properly added to the container via: `echo $MODEL_PROVIDER`. You should see a result that matches the value in the configmap.yaml.
 
-### Mount Secrets
+#### Mount Secrets
 
 > Note: You can likely skip steps 1-3 assuming you are immediately continuing from the section above, though your token may need to be reset.
 
