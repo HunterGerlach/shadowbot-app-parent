@@ -38,13 +38,16 @@ components:
           targetPort: 5858
   - name: deep-thought-configs
     openshift:
-      uri: ../deep-thought/k8s/base/configMap.yaml
+      uri: ${PROJECTS_ROOT}/deep-thought/k8s/base/configMap.yaml
+      deployByDefault: true
   - name: deep-thought-secrets
     openshift:
-      uri: ../deep-thought/k8s/base/secrets.yaml
+      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/secrets.yaml
+      deployByDefault: true
   - name: google-application-credentials
     openshift:
-      uri: ../deep-thought/k8s/base/google-application-credentials.yaml        
+      uri: ${PROJECTS_ROOT}//deep-thought/k8s/base/google-application-credentials.yaml
+      deployByDefault: true
 commands:
   - id: bootstrap
     exec:
