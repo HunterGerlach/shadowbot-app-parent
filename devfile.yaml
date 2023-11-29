@@ -49,8 +49,8 @@ commands:
   - id: bootstrap
     exec:
       component: runtime
-      commandLine: oc apply -k ${PROJECTS_ROOT}/deep-thought/k8s/overlays/dev-spaces
-      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlays/
+      commandLine: oc apply -k dev-spaces
+      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlay/
       group:
         kind: build
         isDefault: true
