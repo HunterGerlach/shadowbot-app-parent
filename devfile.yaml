@@ -77,8 +77,7 @@ components:
       inlined: |
         apiVersion: v1
         data:
-          username: aGVsbG8=
-          password: d29ybGQ=
+          MODEL_PROVIDER: CHANGE_ME
         kind: Secret
         metadata:
           name: deep-thought-secrets
@@ -89,8 +88,7 @@ components:
       inlined: |
         apiVersion: v1
         data:
-          username2: YWRtaW4=
-          password2: MWYyZDFlMmU2N2Rm
+          deepthought-dev.json: YWRtaW4=
         kind: Secret
         metadata:
           name: google-application-credentials
