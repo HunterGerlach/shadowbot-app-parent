@@ -54,6 +54,7 @@ components:
         metadata:
           name: deep-thought-config
           annotations:
+            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"ConfigMap\", \"metadata\": {\"name\": \"deep-thought-config\"}}"
             controller.devfile.io/mount-as: env
           labels:
             controller.devfile.io/mount-to-devworkspace: 'true'
@@ -96,6 +97,7 @@ components:
           name: deep-thought-secrets
           namespace: deep-thought-dev
           annotations:
+            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"Secret\", \"metadata\": {\"name\": \"deep-thought-secrets\"}}"
             controller.devfile.io/mount-as: env
           labels:
             controller.devfile.io/mount-to-devworkspace: 'true'
@@ -110,6 +112,7 @@ components:
         metadata:
           name: google-application-credentials
           annotations:
+            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"Secret\", \"metadata\": {\"name\": \"google-application-credentials\"}}"
             controller.devfile.io/mount-path: /etc/42
             controller.devfile.io/mount-as: file
           labels:
