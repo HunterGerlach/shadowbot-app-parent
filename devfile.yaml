@@ -53,6 +53,11 @@ components:
         apiVersion: v1
         metadata:
           name: deep-thought-config
+          annotations:
+            controller.devfile.io/mount-as: env
+          labels:
+            controller.devfile.io/mount-to-devworkspace: 'true'
+            controller.devfile.io/watch-configmap: 'true'
         data:
           PYTHONPATH: /
           SPENDING_WARNING_PCT: '0.8'
@@ -89,19 +94,31 @@ components:
         kind: Secret
         metadata:
           name: deep-thought-secrets
+          namespace: deep-thought-dev
+          annotations:
+            controller.devfile.io/mount-as: env
+          labels:
+            controller.devfile.io/mount-to-devworkspace: 'true'
+            controller.devfile.io/watch-secret: 'true'
         type: Opaque
   - name: google-application-credentials
     openshift:
       deployByDefault: true
       inlined: |
+        kind: Secret
         apiVersion: v1
+        metadata:
+          name: google-application-credentials
+          annotations:
+            controller.devfile.io/mount-path: /etc/42
+            controller.devfile.io/mount-as: file
+          labels:
+            controller.devfile.io/mount-to-devworkspace: 'true'
+            controller.devfile.io/watch-secret: 'true'
+        type: Opaque
         data:
           username2: YWRtaW4=
           password2: MWYyZDFlMmU2N2Rm
-        kind: Secret
-        metadata:
-          name: google-application-credentials
-        type: Opaque
 commands:
   - id: bootstrap
     exec:
