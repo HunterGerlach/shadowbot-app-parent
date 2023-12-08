@@ -123,6 +123,34 @@ components:
           username2: YWRtaW4=
           password2: MWYyZDFlMmU2N2Rm
 commands:
+  - id: install-deps
+    exec:
+      label: "0. Install Dependencies"
+      component: runtime
+      commandLine: pip3 install -r requirements.txt && make install
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      group:
+        kind: build
+        isDefault: true
+  - id: podman-login
+    exec:
+      label: "1. Login to quay.io"
+      commandLine: podman login quay.io
+      component: runtime
+  - id: image-build
+    exec:
+      label: "2. Build Image and Publish to Quay.io"
+      component: runtime
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      commandLine: |
+          set -o xtrace;
+          rm -rf output;
+          mkdir output;
+          BUILDER=podman SKIP_TEST=true SKIP_FORMAT=true SKIP_LINT=true NODE_BUILD_OPTIONS="-max-old-space-size=1024" ./build.sh &&
+          export IMAGE=image-registry.openshift-image-registry.svc:5000/$(kubectl get sa default -o json | jq -r '.metadata.namespace')/deep-thought &&
+          podman tag quay.io/hgerlach/deep-thought:latest ${IMAGE} &&
+          podman login --tls-verify=false -u $(oc whoami | tr -d :) -p $(oc whoami -t) image-registry.openshift-image-registry.svc:5000 &&
+          podman push --tls-verify=false "${IMAGE}"
   - id: bootstrap
     exec:
       component: runtime
@@ -131,18 +159,10 @@ commands:
       group:
         kind: build
         isDefault: true
-  - id: build
-    exec:
-      component: runtime
-      commandLine: pip3 install -r requirements.txt && make install
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: build
-        isDefault: true
   - id: lint
     exec:
       component: runtime
-      commandLine: make lint
+      commandLine: poetry run pylint src
       workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: test
@@ -150,7 +170,7 @@ commands:
   - id: test
     exec:
       component: runtime
-      commandLine: make test
+      commandLine: poetry run pytest
       workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: test
@@ -158,7 +178,7 @@ commands:
   - id: run
     exec:
       component: runtime
-      commandLine: export PYTHONPATH=$(pwd) && make run
+      commandLine: export PYTHONPATH=$(pwd) && poetry run uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
       workingDir: ${PROJECTS_ROOT}/deep-thought
       group:
         kind: run
