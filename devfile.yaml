@@ -45,141 +45,53 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
-  - name: deep-thought-configs
-    openshift:
-      deployByDefault: true
-      inlined: |
-        kind: ConfigMap
-        apiVersion: v1
-        metadata:
-          name: deep-thought-config
-          annotations:
-            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"ConfigMap\", \"metadata\": {\"name\": \"deep-thought-config\"}}"
-            controller.devfile.io/mount-as: env
-          labels:
-            controller.devfile.io/mount-to-devworkspace: 'true'
-            controller.devfile.io/watch-configmap: 'true'
-        data:
-          PYTHONPATH: /
-          SPENDING_WARNING_PCT: '0.8'
-          OPENAI_MODEL_PRICE: '0.000003'
-          VERTEX_MODEL_VERSION: v1
-          GOOGLE_APPLICATION_CREDENTIALS: DEAFULT_PATH
-          MODEL_PROVIDER: AI_PROVIDER
-          EMBEDDING_MODEL_NAME: EMBEDDING_MODEL_NAME
-          LOG_LEVEL: DEBUG
-          COLLECTION_NAME: YOUR_COLLECTION_NAME
-          OPENAI_MODEL_NAME: OPENAI_MODEL_NAME
-          VERTEX_REGION: VERTEXT_REGION
-          VERTEX_ENDPOINT: VERTEX_ENDPOINT
-          DISABLE_SWAGGER: 'false'
-          SPEND_LOG_FILE: spend.log
-          TOKENIZERS_PARALLELISM: 'false'
-          APP_FILE: src/app.py
-          SPEND_LIMIT: '0.075'
-          CORS_ORIGINS: '*'
-          VERTEX_PROJECT_ID: VERTEX_PROJECT_ID
-          VERTEX_MODEL_NAME: VERTEX_MODEL_NAME
-          API_TITLE: API_TITLE_FOR_SWAGGER
-          API_VERSION: API_VERSION_FOR_SWAGGER
-          API_DESCRIPTION: API_DESCRIPTION_FOR_SWAGGER
-          SPEC_KEYS_TO_IGNORE: 'components,paths,info,'
-  - name: deep-thought-secrets
-    openshift:
-      deployByDefault: true
-      inlined: |
-        apiVersion: v1
-        data:
-          username: aGVsbG8=
-          password: d29ybGQ=
-        kind: Secret
-        metadata:
-          name: deep-thought-secrets
-          namespace: deep-thought-dev
-          annotations:
-            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"Secret\", \"metadata\": {\"name\": \"deep-thought-secrets\"}}"
-            controller.devfile.io/mount-as: env
-          labels:
-            controller.devfile.io/mount-to-devworkspace: 'true'
-            controller.devfile.io/watch-secret: 'true'
-        type: Opaque
-  - name: google-application-credentials
-    openshift:
-      deployByDefault: true
-      inlined: |
-        kind: Secret
-        apiVersion: v1
-        metadata:
-          name: google-application-credentials
-          annotations:
-            kubectl.kubernetes.io/last-applied-configuration: "{\"apiVersion\": \"v1\", \"kind\": \"Secret\", \"metadata\": {\"name\": \"google-application-credentials\"}}"
-            controller.devfile.io/mount-path: /etc/42
-            controller.devfile.io/mount-as: file
-          labels:
-            controller.devfile.io/mount-to-devworkspace: 'true'
-            controller.devfile.io/watch-secret: 'true'
-        type: Opaque
-        data:
-          username2: YWRtaW4=
-          password2: MWYyZDFlMmU2N2Rm
 commands:
   - id: install-deps
     exec:
-      label: "0. Install Dependencies"
+      label: "1. Install Dependencies"
       component: runtime
-      commandLine: pip3 install -r requirements.txt && make install
+      commandLine: pip3 install -r requirements.txt && poetry config installer.max-workers 10 && poetry install --no-interaction --only main --no-root -vvv
       workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: build
-        isDefault: true
+  - id: run
+    exec:
+      label: "2. Run Application Locally"
+      component: runtime
+      commandLine: export PYTHONPATH=$(pwd) && poetry run uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: lint
+    exec:
+      label: "3. Lint Code"
+      component: runtime
+      commandLine: poetry run pylint src
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: test
+    exec:
+      label: "4. Run Tests"
+      component: runtime
+      commandLine: poetry run pytest
+      workingDir: ${PROJECTS_ROOT}/deep-thought
   - id: podman-login
     exec:
-      label: "1. Login to quay.io"
+      label: "5. Login to Container Registry"
       commandLine: podman login quay.io
       component: runtime
   - id: image-build
     exec:
-      label: "2. Build Image and Publish to Quay.io"
+      label: "6. Build and Tag Image"
       component: runtime
       workingDir: ${PROJECTS_ROOT}/deep-thought
       commandLine: |
           set -o xtrace;
-          rm -rf output;
-          mkdir output;
-          BUILDER=podman SKIP_TEST=true SKIP_FORMAT=true SKIP_LINT=true NODE_BUILD_OPTIONS="-max-old-space-size=1024" ./build.sh &&
-          export IMAGE=image-registry.openshift-image-registry.svc:5000/$(kubectl get sa default -o json | jq -r '.metadata.namespace')/deep-thought &&
-          podman tag quay.io/hgerlach/deep-thought:latest ${IMAGE} &&
-          podman login --tls-verify=false -u $(oc whoami | tr -d :) -p $(oc whoami -t) image-registry.openshift-image-registry.svc:5000 &&
-          podman push --tls-verify=false "${IMAGE}"
+          # Build the Docker image using the Containerfile
+          podman build -t quay.io/hgerlach/deep-thought:latest .
+          # Tag the image for the registry
+          podman tag quay.io/hgerlach/deep-thought:latest quay.io/hgerlach/deep-thought:latest
+          # Push the image to the registry
+          podman push quay.io/hgerlach/deep-thought:latest
+
   - id: bootstrap
     exec:
+      label: "7. Bootstrap (Optional)"
       component: runtime
       commandLine: oc apply -k dev-spaces
       workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlay/
-      group:
-        kind: build
-        isDefault: true
-  - id: lint
-    exec:
-      component: runtime
-      commandLine: poetry run pylint src
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: test
-        isDefault: true
-  - id: test
-    exec:
-      component: runtime
-      commandLine: poetry run pytest
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: test
-        isDefault: true
-  - id: run
-    exec:
-      component: runtime
-      commandLine: export PYTHONPATH=$(pwd) && poetry run uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
-      workingDir: ${PROJECTS_ROOT}/deep-thought
-      group:
-        kind: run
-        isDefault: true
