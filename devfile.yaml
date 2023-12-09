@@ -73,7 +73,7 @@ commands:
   - id: podman-login
     exec:
       label: "5. Login to Container Registry"
-      commandLine: podman login quay.io
+      commandLine: podman login quay.io && export QUAY_USERNAME=$(podman info --format '{{.Registries[0].Username}}')
       component: runtime
   - id: image-build
     exec:
@@ -83,15 +83,14 @@ commands:
       commandLine: |
           set -o xtrace;
           # Build the Docker image using the Containerfile
-          podman build -t quay.io/hgerlach/deep-thought:latest .
+          podman build -t quay.io/${QUAY_USERNAME}/deep-thought:latest .
           # Tag the image for the registry
-          podman tag quay.io/hgerlach/deep-thought:latest quay.io/hgerlach/deep-thought:latest
+          podman tag quay.io/${QUAY_USERNAME}/deep-thought:latest quay.io/${QUAY_USERNAME}/deep-thought:latest
           # Push the image to the registry
-          podman push quay.io/hgerlach/deep-thought:latest
-
-  - id: bootstrap
+          podman push quay.io/${QUAY_USERNAME}/deep-thought:latest
+  - id: openshift-deploy
     exec:
-      label: "7. Bootstrap (Optional)"
+      label: "7. Deploy to OpenShift"
       component: runtime
       commandLine: oc apply -k dev-spaces
-      workingDir: ${PROJECTS_ROOT}/deep-thought/k8s/overlay/
+      workingDir: ${PROJECTS_ROOT}/deep-thought/deployment/overlay
