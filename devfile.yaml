@@ -8,13 +8,89 @@ projects:
   git:
     checkoutFrom:
       remote: origin
-      revision: main
+      revision: feature/devfile-updates-nov #main
     remotes:
       origin: https://github.com/HunterGerlach/shadowbot-app-parent.git
 - name: deep-thought
   git:
     checkoutFrom:
       remote: origin
-      revision: main
+      revision: feature/devfile-updates-nov #main
     remotes:
       origin: https://github.com/HunterGerlach/deep-thought.git
+- name: deep-thought-web-ui
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: main
+    remotes:
+      origin: https://github.com/HunterGerlach/deep-thought-web-ui.git
+components:
+  - name: runtime
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8@sha256:571ceed7b4b886b7f989ba193fa74ec863600f56f7c0045f3a1af6dadf09f85b #registry.access.redhat.com/ubi8/python-311:latest
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+      env:
+        - name: VSCODE_DEFAULT_WORKSPACE # This env var is what tells Dev Spaces how the workspace should be defined
+          value: "/projects/shadowbot-app-parent/shadowbot.code-workspace"
+        - name: DEBUG_PORT
+          value: '5858'
+      endpoints:
+        - name: http-node
+          protocol: http
+          targetPort: 8000
+          secure: true
+          exposure: public
+        - exposure: none
+          name: debug
+          targetPort: 5858
+commands:
+  - id: install-deps
+    exec:
+      label: "1. Install Dependencies"
+      component: runtime
+      commandLine: pip3 install -r requirements.txt && poetry config installer.max-workers 10 && poetry install --no-interaction --only main --no-root -vvv
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: run
+    exec:
+      label: "2. Run Application Locally"
+      component: runtime
+      commandLine: export PYTHONPATH=$(pwd) && poetry run uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: lint
+    exec:
+      label: "3. Lint Code"
+      component: runtime
+      commandLine: poetry run pylint src
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: test
+    exec:
+      label: "4. Run Tests"
+      component: runtime
+      commandLine: poetry run pytest
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+  - id: podman-login
+    exec:
+      label: "5. Login to Container Registry"
+      commandLine: podman login quay.io && export QUAY_USERNAME=$(podman info --format '{{.Registries[0].Username}}')
+      component: runtime
+  - id: image-build
+    exec:
+      label: "6. Build and Tag Image"
+      component: runtime
+      workingDir: ${PROJECTS_ROOT}/deep-thought
+      commandLine: |
+          set -o xtrace;
+          # Build the Docker image using the Containerfile
+          podman build -t quay.io/${QUAY_USERNAME}/deep-thought:latest .
+          # Tag the image for the registry
+          podman tag quay.io/${QUAY_USERNAME}/deep-thought:latest quay.io/${QUAY_USERNAME}/deep-thought:latest
+          # Push the image to the registry
+          podman push quay.io/${QUAY_USERNAME}/deep-thought:latest
+  - id: openshift-deploy
+    exec:
+      label: "7. Deploy to OpenShift"
+      component: runtime
+      commandLine: oc apply -k dev-spaces
+      workingDir: ${PROJECTS_ROOT}/deep-thought/deployment/overlay

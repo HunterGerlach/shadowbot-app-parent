@@ -35,7 +35,7 @@ You may leave the default configuration, or change according to your need (eg lo
 Click on the "Create" button
 In the "Workload > Pods" section, you can see several pods being created. This may take a few minutes.
 
-> Note: If you want this to be available to other users (which you likely do!), then you need to either a) deploy this to a namespace where others will have access, or b) adjust user access to the default-install namespace.
+> Note: Users simply need to visit the URL to the Dev Spaces dashboard (see PR badge example) and they will be asked to create a workspace. Creating the workspace will automatically create a namespace and give them the a workspace (or the option to create one).
 
 ![Pods](../images/pods.png)
 

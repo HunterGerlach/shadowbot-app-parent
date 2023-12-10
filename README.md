@@ -1,6 +1,10 @@
 # Shadowbot+AI App Parent
 
-Quickstart - Click the following button to get started quickly (assuming you have credentials to the cluster)...
+This is the Dev Spaces parent application for [Deep Thought](https://github.com/HunterGerlach/deep-thought) and [Deep Thought Web UI](https://github.com/HunterGerlach/deep-thought-web-ui).
+
+## Quickstart
+
+Click the following button to get started quickly (assuming you have credentials to the cluster)...
 
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-xcd89.dynamic.opentlc.com/#https://github.com/HunterGerlach/shadowbot-app-parent.git)
 
