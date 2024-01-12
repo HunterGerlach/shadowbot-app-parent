@@ -49,22 +49,37 @@ You will access to Dev Spaces landing page
 
 ## Import and Configure the Project
 
-4. Import the `shadowbot-app-parent` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
+You have two options to get a project up and running in Dev Spaces.
+
+### Option 1 - via Dev Spaces
+
+The first option is via the Dev Spaces web console.
+
+1. Import the `shadowbot-app-parent` project using the following URL: https://github.com/HunterGerlach/shadowbot-app-parent.git
 
 ![Import project](../images/import-project.png)
+
+> Note: You can optionally include the branch name in the repo URL to specify a specific working branch. For example: `https://github.com/HunterGerlach/shadowbot-app-parent/tree/feature/my-new-feature` where `feature/my-new-feature` is the desired branch.
 
 The workspace is being created, this may takes a few minutes to complete
 
 ![Starting workspace](../images/starting-workspace.png)
 
-5. VS Code should now be up and running in your Dev Sapces environment
+2. VS Code should now be up and running in your Dev Sapces environment
    Click on the "Open Workspace" button on the bottom right. (This step is required if the `VSCODE_DEFAULT_WORKSPACE` is not set in the devfile.)
    An image for a specific container will be created in the future where this property will be set.
-   You should now see the projects identified to be part of the workspace
 
-![VS Code projects](../images/vscode.png)
+### Option 2 - via GitHub Badge
+
+Your second option is to simply press the badge button on this parent project's GitHub README page as shown here:
+
+![Dev Spaces Badge on GitHub](../images/dev-spaces-link-on-github-repo.png)
 
 Your workspace is ready to use.
+
+Once you complete one of these methods, you should now see the projects identified to be part of the workspace
+
+![VS Code projects](../images/vscode.png)
 
 ## Mount Configs and Secrets
 
